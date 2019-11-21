@@ -11,7 +11,7 @@ buildscript {
   }
   dependencies {
     classpath "io.franzbecker:gradle-lombok:1.14"
-    classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.6.2"
+    classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:2.0.1"
   }
 }
 
@@ -31,18 +31,18 @@ lombok {
 }
 
 spotbugs {
-  toolVersion = '3.1.3'
+  toolVersion = '3.1.12'
   ignoreFailures = true
   effort = 'max'
   showProgress = true
 }
 
-sourceSets {
+//sourceSets {
   // we define `main` sourceSet here, so SpotBugs Gradle Plugin generates `spotbugsMain` task
-  main {
-    java.srcDirs = ['src/main/java']
-  }
-}
+  //main {
+    //java.srcDirs = ['src/main/java']
+  //}
+//}
 
 // To generate an HTML report instead of XML
 tasks.withType(com.github.spotbugs.SpotBugsTask) {
