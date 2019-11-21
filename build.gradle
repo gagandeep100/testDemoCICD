@@ -1,20 +1,33 @@
-apply plugin: 'java'
-apply plugin: 'jacoco'
-apply plugin: 'war'
-apply plugin: "com.github.spotbugs"
-
-repositories {
-    jcenter()
+buildscript {
+  ext {
+    lombokVersion = '1.16.20'
+    logbackVersion = '1.2.3'
+    slf4jVersion = '1.7.25'
+  }
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+  dependencies {
+    classpath "io.franzbecker:gradle-lombok:1.14"
+    classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.6.2"
+  }
 }
 
-dependencies {
-    providedCompile 'javax:javaee-web-api:7.0'
-    compile "org.slf4j:slf4j-api:$slf4jVersion"
-  compile "org.slf4j:jul-to-slf4j:$slf4jVersion"
-  compile "org.slf4j:log4j-over-slf4j:$slf4jVersion"
-  compile "ch.qos.logback:logback-classic:$logbackVersion"
-    testCompile     'junit:junit:4.12'
-spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.7.1'
+apply plugin: "java"
+apply plugin: "com.github.spotbugs"
+apply plugin: "io.franzbecker.gradle-lombok"
+
+repositories {
+  mavenCentral()
+  jcenter()
+}
+
+defaultTasks 'clean', 'check'
+
+lombok {
+  version = project.lombokVersion
 }
 
 spotbugs {
@@ -37,4 +50,15 @@ tasks.withType(com.github.spotbugs.SpotBugsTask) {
     xml.enabled = false
     html.enabled = true
   }
+}
+
+dependencies {
+  compile "org.slf4j:slf4j-api:$slf4jVersion"
+  compile "org.slf4j:jul-to-slf4j:$slf4jVersion"
+  compile "org.slf4j:log4j-over-slf4j:$slf4jVersion"
+  compile "ch.qos.logback:logback-classic:$logbackVersion"
+
+  testCompile 'junit:junit:4.12'
+
+  spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.7.1'
 }
