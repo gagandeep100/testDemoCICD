@@ -2,7 +2,7 @@ node{
 checkout scm
 stage('Gradle Build') {
     
-        sh 'gradlew build --info'
+        sh 'gradle build --info'
     
     }
 }
