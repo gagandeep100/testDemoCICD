@@ -2,9 +2,15 @@ node{
 
 stage('Gradle Build') {
     if (isUnix()) {
-        sh 'gradle clean build'
+        sh 'gradle build'
     } else {
         bat 'gradle.bat clean build'
+    }
+}
+
+stage('spotbugs scan') {
+        sh 'gradle spotbugsMain'
+
     }
 }
 }
