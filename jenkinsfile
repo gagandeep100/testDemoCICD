@@ -6,6 +6,15 @@ stage('Gradle Build') {
     
     }
 }
-
+ stage('Static code analysis') {
+            steps {
+                // Add SpotBugs here
+                echo 'Invoking SonarQube'
+                sh './gradlew sonarqube \
+                    -Dsonar.host.url=https://sonarqube.fortum.tech \
+                    -Dsonar.login=64568967bc199da7a8dc7bc9422200b8b47a4020'
+              
+            }
+        }
 
 
